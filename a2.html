@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For My Chand ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    font-family:Poppins, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+/* background collage */
+.bg{
+    position:fixed;
+    inset:0;
+    background:
+      linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+      url("aarchi.jpg"),
+      url("me.jpg");
+    background-size:cover;
+    background-position:center;
+    filter:blur(4px) brightness(.7);
+    z-index:-2;
+}
+
+/* glass card */
+.card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(18px);
+    padding:30px;
+    border-radius:28px;
+    text-align:center;
+    width:85%;
+    max-width:340px;
+    box-shadow:0 20px 45px rgba(0,0,0,.6);
+}
+
+/* buttons */
+button{
+    padding:12px 24px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    position:absolute;
+    cursor:pointer;
+}
+
+#yes{
+    background:#ff4d6d;
+    color:white;
+    left:25%;
+}
+
+#no{
+    background:#ddd;
+    right:25%;
+}
+
+#result{
+    display:none;
+    margin-top:20px;
+}
+
+/* hearts */
+.heart{
+    position:absolute;
+    animation:float 6s linear infinite;
+}
+@keyframes float{
+    from{transform:translateY(100vh);opacity:0}
+    50%{opacity:1}
+    to{transform:translateY(-10vh);opacity:0}
+}
+
+/* fireworks canvas */
+canvas{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<canvas id="fireworks"></canvas>
+
+<div class="card">
+<h2>
+Aarchiiiii Mehtaaaa 🥹👉👈🙇<br><br>
+Will you be my Valentine? ❤️
+</h2>
+
+<button id="yes">Yes 💖</button>
+<button id="no">No 😢</button>
+
+<div id="result">
+<h3>Forever yours, Chand 😍❤️</h3>
+<img src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" width="170">
+</div>
+</div>
+
+<!-- YOUR SONG -->
+<audio id="music" loop>
+    <source src="perfect.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const result=document.getElementById("result");
+const music=document.getElementById("music");
+
+/* moving NO */
+function moveNo(){
+    noBtn.style.left=Math.random()*80+"%";
+    noBtn.style.top=Math.random()*80+"%";
+}
+noBtn.onmouseover=moveNo;
+noBtn.ontouchstart=moveNo;
+
+/* YES click */
+yesBtn.onclick=()=>{
+    yesBtn.style.display="none";
+    noBtn.style.display="none";
+    result.style.display="block";
+    music.play();
+    startFireworks();
+};
+
+/* floating hearts */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(20+Math.random()*25)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},300);
+
+
+/* FIREWORKS */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function startFireworks(){
+    setInterval(()=>{
+        const x=Math.random()*canvas.width;
+        const y=Math.random()*canvas.height/2;
+
+        for(let i=0;i<40;i++){
+            const angle=Math.random()*2*Math.PI;
+            const speed=Math.random()*4;
+            const dx=Math.cos(angle)*speed;
+            const dy=Math.sin(angle)*speed;
+
+            let px=x, py=y;
+
+            const id=setInterval(()=>{
+                ctx.fillStyle="rgba(255,77,109,0.8)";
+                ctx.fillRect(px,py,3,3);
+                px+=dx;
+                py+=dy;
+            },20);
+
+            setTimeout(()=>clearInterval(id),500);
+        }
+    },600);
+}
+</script>
+
+</body>
+</html>
